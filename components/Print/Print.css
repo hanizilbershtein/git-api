@@ -1,0 +1,26 @@
+
+.print{
+    display:"flex";
+    width:"30%";
+    margin:"1rem";
+    border:" 20px aqua solid";
+
+
+}
+.repos{
+    background-color: aqua;
+    height: 150px;
+    width: 30%;
+    text-align: center;
+    color: azure;
+    font-size: 30px;
+}
+img{
+    border-radius: 50%;
+    height: 60px;
+    margin-left: 150px;
+
+}
+h1{
+    margin-left: 170px;
+}
