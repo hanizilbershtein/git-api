@@ -14,8 +14,8 @@ const Button = ({text,clickEvent,user,isSearch,}) => {
            public_repos={e.public_repos} 
            deleteclick ={(e)=>{
                const remove=e.target.parentElement.remove()
-               console.log(remove);
-               console.log(user);
+               //console.log(remove);
+              // console.log(user);
            }}
            
            />

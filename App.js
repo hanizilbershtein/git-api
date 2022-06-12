@@ -4,6 +4,7 @@ import axios from 'axios'
 import Search from './components/Search/Search';
 import Button from './components/Button/Button'
 import Print from './components/Print/Print';
+import Select from './components/Select/Select';
 
 
 function App() {
@@ -14,13 +15,24 @@ function App() {
   const [sort,setSort]= useState()
   //const [users, setUsers]=useState([])
 
- function sortFunction(a,b){  
+ function sortDate(a,b){  
   var dateA = new Date(a.created_at).getTime();
   var dateB = new Date(b.created_at).getTime();
   return dateA > dateB ? 1 : -1;  
 };  
+function sortName(a,b){
+    var textA = a.login.toUpperCase();
+    var textB = b.login.toUpperCase();
+    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+  };
+function sortRepose(a,b){
+  var repoa = a.public_repos
+  var repob = b.public_repos
+  return (repoa< repob) ? 1:-1;
+}
 
-  useEffect(()=>{
+
+useEffect(()=>{
     try{async function fetchData(){
       const gitHubApiUrl=`https://api.github.com/users/${searchUser}`
       console.log(gitHubApiUrl);
@@ -49,37 +61,34 @@ function App() {
       <Button
       //user={user}
       //isSearch={false}
-      text = {"reset"} clickEvent={()=>{
-        setUser([])
-        
-        console.log("reset")}}
-        />
-      <Button
-      text={"sort"}
-      isSearch={false}
+      text = {"reset"}
+       clickEvent={()=>{
+        setUser([]) 
+        console.log("reset")
+        }}
+        setSearchUser={setSearchUser}
 
-      clickEvent={(e)=>{
-       // const dates=[];
-        user.sort(sortFunction)
+        />
+
+     
+      <Select changeSort={(e)=>{
+       if(e.target.value==="Name"){
+        user.sort(sortName)
+        setSearchUser("")
         setUser(user)
-        console.log(user);
-        console.log(isSearch);
-        user.map(el=>
-          <Print 
-            avatar={el.avatar_url}
-            login={el.login}
-            create={el.created_at}
-            repo={el.public_repos}
-            deleteClick={(e)=>{console.log(e.target)
-              e.target.parentElement.remove()
-              //console.log(user);
-            }
-            }
-            />
-        )
-      }}
-      
-      />
+       }
+       if(e.target.value==="Date"){
+        user.sort(sortDate)
+        setSearchUser("")
+        setUser(user)
+       };
+       if(e.target.value==="Repositories"){
+        user.sort(sortRepose)
+        setSearchUser("")
+        setUser(user)
+       }
+        
+      }}/>
        
 
      
